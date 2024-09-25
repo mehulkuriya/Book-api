@@ -7,5 +7,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-// Artisan::command('rentals:mark-overdue', function () {
-// })->purpose('OverDue Rental')->daily();
+Artisan::command('rentals:mark-overdue', function () {
+})->purpose('OverDue Rental')->daily();

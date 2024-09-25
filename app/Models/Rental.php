@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rental extends Model
 {
+    use HasFactory;
     protected $fillable = ['book_id', 'user_id', 'rented_at', 'due_at', 'returned_at', 'is_overdue'];
 
     public function book()
