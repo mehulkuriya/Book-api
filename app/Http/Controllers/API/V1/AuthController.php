@@ -6,11 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-
+use App\Http\Requests\LoginRequest;
+use App\Repositories\AuthRepository;
 
 class AuthController extends Controller
 {
+
+    protected $authRepository;
+
+    public function __construct(AuthRepository $authRepository)
+    {
+        $this->authRepository = $authRepository;
+    }
     /**
      * Handle user login and return a token.
      *
@@ -27,8 +34,8 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email","password"},
-     *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
-     *             @OA\Property(property="password", type="string", example="password")
+     *             @OA\Property(property="email", type="string", format="email", example="admin@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="Admin@123")
      *         ),
      *     ),
      *     @OA\Response(
@@ -55,21 +62,10 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials.'], 401);
-        }
-
-        $token = $user->createToken('authToken')->plainTextToken;
-
+        $token = $this->authRepository->login($request);
+       
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',

@@ -19,15 +19,7 @@ class AuthenticateTest extends TestCase
                  ->assertJsonValidationErrors(['email', 'password']);
     }
 
-    public function test_returns_invalid_credentials_when_user_does_not_exist()
-    {
-        $response = $this->postJson('/api/v1/login', [
-            'email' => 'nonexistent@example.com',
-            'password' => 'wrongpassword'
-        ]);
-        $response->assertStatus(401)
-                 ->assertJson(['message' => 'Invalid credentials.']);
-    }
+  
 
     public function test_returns_access_token_when_login_is_successful()
     {

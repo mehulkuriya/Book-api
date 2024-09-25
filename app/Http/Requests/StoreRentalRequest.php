@@ -13,7 +13,7 @@ class StoreRentalRequest extends FormRequest
      */
     public function authorize()
     {
-        return true; // Adjust this based on your authorization logic
+        return true; 
     }
 
     /**
