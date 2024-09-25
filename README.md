@@ -100,3 +100,12 @@ The api can now be accessed at
    http://127.0.0.1:8000/api/
 
 
+
+to test and mark rental overdue created console command 
+
+php artisan rentals:mark-overdue
+
+
+Execute the test case using below command 
+
+php artisan test 
